@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
                 // Insertion dans la BD
-               $stmt = $pdo->prepare("INSERT INTO users (nom, prenom, email, date_naissance, filiere, password, verification_token, is_verified, role, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 'participant', NOW())");
+               $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, date_naissance, filiere, password, verification_token, is_verified, role, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 'participant', NOW())");
 $stmt->execute([$nom, $prenom, $email, $date_naissance, $filiere, $hashed_password, $verification_token]);
 
                 // Envoi de l'email de verification
@@ -279,7 +279,8 @@ $stmt->execute([$nom, $prenom, $email, $date_naissance, $filiere, $hashed_passwo
                             <option value="Supply Chain Management" <?php echo (($_POST['filiere'] ?? '') === 'Supply Chain Management') ? 'selected' : ''; ?>>Supply Chain Management</option>
                             <option value="Génie Télecommunication et réseaux" <?php echo (($_POST['filiere'] ?? '') === 'Génie Télecommunication et réseaux') ? 'selected' : ''; ?>>Génie Télecommunication et réseaux</option>
                             <option value="Cybersecurité" <?php echo (($_POST['filiere'] ?? '') === 'Cybersecurité') ? 'selected' : ''; ?>>Cybersecurité</option>
-                             <option value="Je suis externe" <?php echo (($_POST['filiere'] ?? '') === 'Je suis externe') ? 'selected' : ''; ?>>Je suis externe</option>
+                             <option value="2AP" <?php echo (($_POST['filiere'] ?? '') === '2AP') ? 'selected' : ''; ?>>2AP</option>
+                            <option value="Je suis externe" <?php echo (($_POST['filiere'] ?? '') === 'Je suis externe') ? 'selected' : ''; ?>>Je suis externe</option>
                         </select>
                         <label for="filiere">Filiere</label>
                     </div>

@@ -1,24 +1,8 @@
 
-CREATE DATABASE IF NOT EXISTS campus_event CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS campus_events CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE campus_event;
 
-CREATE TABLE utilisateurs (
-    id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
-    nom VARCHAR(100) NOT NULL,
-    prenom VARCHAR(100) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    date_naissance DATE,
-    filiere VARCHAR(100),
-    password VARCHAR(255) NOT NULL,
-    verification_token VARCHAR(255),
-    is_verified BOOLEAN DEFAULT FALSE,
-    role ENUM('admin', 'participant', 'organisateur') DEFAULT 'membre',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    last_login TIMESTAMP NULL,
-    INDEX idx_email (email),
-    INDEX idx_role (role)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS utilisateurs ( id INT AUTO_INCREMENT PRIMARY KEY, nom VARCHAR(100) NOT NULL, prenom VARCHAR(100) NOT NULL, email VARCHAR(255) UNIQUE NOT NULL, date_naissance DATE NOT NULL, filiere VARCHAR(100) NOT NULL, password VARCHAR(255) NOT NULL, verification_token VARCHAR(64), is_verified TINYINT(1) DEFAULT 0, role ENUM('participant', 'admin', 'organisateur') DEFAULT 'participant', created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP );
 
 CREATE TABLE club (
     id_club INT PRIMARY KEY AUTO_INCREMENT,

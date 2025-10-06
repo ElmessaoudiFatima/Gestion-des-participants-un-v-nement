@@ -3,7 +3,7 @@ session_start();
 
 // Configuration de la base de donnees
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'campus_event');
+define('DB_NAME', 'campus_events');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // verifier si l email existe 
-            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+            $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = ?");
             $stmt->execute([$email]);
             if ($stmt->fetch()) {
                 $errors[] = "Cet email est déjà utilisé";
@@ -99,7 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $stmt->execute([$nom, $prenom, $email, $date_naissance, $filiere, $hashed_password, $verification_token]);
 
                 // Envoi de l'email de verification
-             $verification_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . "/inscription/verify.php?token=" . $verification_token;
+            $verification_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")
+    . "://" . $_SERVER['HTTP_HOST']
+    . "/Gestion-des-participants-un-v-nement/public/verify.php?token=" . urlencode($verification_token);
+
                 
                 $mail = new PHPMailer(true);
                 
